@@ -45,3 +45,6 @@ make
 ./truthtable tests/SIMPLE.expr tests/SIMPLE.map
 ./truthtable tests/MUX_4BIT.expr tests/MUX_4BIT.map
 ```
+
+## Future features
+Option to generate a truth table (for all valuations) rather than a specific .map
