@@ -53,6 +53,7 @@ void App:: readFileExp() {
     if (!getline(fileExp, ans)) {
         throw runtime_error{"Invalid expression format"};
     }
+    expression = ans;
 }
 
 void App:: readFileMap() {
@@ -99,7 +100,8 @@ void App:: begin() {
         }
         cout << "Expression: ";
         parseTree->print(); //  Print parsetree recursively (for fun)
-        cout << "Result: " << result;
+        cout << endl;
+        cout << "Result: " << result << endl;
     } catch (exception& e) {
         cerr << e.what();
     }
