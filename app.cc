@@ -41,7 +41,15 @@ unique_ptr<Node> App:: parseExpression(const vector<string>& tokens, size_t& ind
     auto left = parsePrimary(tokens, index);
     while (index < tokens.size() && (tokens[index] == "+" || tokens[index] == "*")) {
         // Binary AND or OR operation
-        NodeType type = (tokens[index++] == "+") ? NodeType::AND : NodeType::OR;
+        NodeType type;
+        if (tokens[index] == "+") {
+        type = NodeType::OR;
+        } else if (tokens[index] == "*") {
+            type = NodeType::AND;
+        } else {
+            throw runtime_error{"Parsing error: invalid expression"};
+        }
+        index++;
         auto right = parsePrimary(tokens, index);
         left = make_unique<BinaryOpNode>(type, std::move(left), std::move(right));
     }
