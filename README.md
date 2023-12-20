@@ -3,11 +3,18 @@
 Evaluates expressions in propositional logic.
 Write the expression into the .expr file and the values for each variable into the .map file
 
+## Features
+- Implicit brackets
+- Parses (!a + b) as ((!a) + b) to save time
+
 ## Syntax
 ```
 * : Logical AND
 + : Logical OR
 ! : Logical NOT
+
+Example:
+(!a + b) * !(c * d)
 ```
 
 ## Example
