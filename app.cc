@@ -55,26 +55,18 @@ void App:: readFileExp() {
     }
 }
 
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <string>
-#include <map>
-
-void readFile(const std::string& filename, std::map<char, bool>& variableMap) {
-    std::ifstream file(filename);
+void App:: readFileMap() {
     
-    if (!file.is_open()) {
-        std::cerr << "Error opening file: " << filename << std::endl;
-        return;
+    if (!fileMap.is_open()) {
+        throw runtime_error{"Error opening file: " + filenameMap};
     }
 
     std::string line;
-    while (std::getline(file, line)) {
+    while (std::getline(fileMap, line)) {
         std::istringstream iss(line);
 
-        char variable;
-        std::string valueStr;
+        string variable;
+        string valueStr;
 
         if (iss >> variable >> valueStr) {
             if (valueStr == "TRUE" || valueStr == "true" || valueStr == "1") {
@@ -82,10 +74,10 @@ void readFile(const std::string& filename, std::map<char, bool>& variableMap) {
             } else if (valueStr == "FALSE" || valueStr == "false" || valueStr == "0") {
                 variableMap[variable] = false;
             } else {
-                std::cerr << "Invalid value for variable " << variable << ": " << valueStr << std::endl;
+                throw runtime_error{"Invalid value for variable " + variable + ": " + valueStr};
             }
         } else {
-            std::cerr << "Invalid line format: " << line << std::endl;
+            throw runtime_error{"Invalid line format: " + line};
         }
     }
 }
