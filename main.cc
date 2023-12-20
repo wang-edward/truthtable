@@ -2,6 +2,12 @@
 
 using namespace std;
 
-int main() {
-    App app
+int main(int argc, char** argv) {
+    if (argc != 3) {
+        cerr << "Takes 2 inputs: filename for boolean expression, filename for values";
+    }
+    string filenameExp{argv[1]};
+    string filenameMap{argv[2]};
+    App app{filenameExp, filenameMap};
+    app.begin();
 }

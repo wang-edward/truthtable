@@ -85,6 +85,26 @@ void App:: readFileMap() {
 App:: App(const string& filenameExp, const string& filenameMap):
     filenameExp{filenameExp}, filenameMap{filenameMap}, fileExp{filenameExp}, fileMap{filenameMap} {}
 
+void App:: begin() {
+    try {
+        readFileExp();
+        readFileMap();
+        tokens = lexer(expression);
+        parseTree = parseExpression(tokens, index);
+        bool result = parseTree->evaluate(variableMap);
+        cout << boolalpha;
+        cout << "Variables:\n";
+        for (auto v : variableMap) {
+            cout << "\t" << v.first << ": " << v.second << "\n";
+        }
+        cout << "Expression: ";
+        parseTree->print(); //  Print parsetree recursively (for fun)
+        cout << "Result: " << result;
+    } catch (exception& e) {
+        cerr << e.what();
+    }
+}
+
 App:: ~App() {
     fileExp.close();
     fileMap.close();

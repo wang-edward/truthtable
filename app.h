@@ -14,6 +14,7 @@
 #include "binary_op_node.h"
 
 class App {
+    size_t index = 0;
     std::string expression;
     std::vector<std::string> tokens;
     std::unique_ptr<Node> parseTree;
