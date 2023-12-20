@@ -1,13 +1,17 @@
 #pragma once
 #include "node.h"
 
+using namespace std;
+
 class BinaryOpNode : public Node {
     NodeType type;
     std::string getOpSymbol() const {
         switch (type) {
-            case NodeType::AND: return "+";
-            case NodeType::OR: return "*";
-            default: return "";
+            case NodeType::AND: return "*";
+            case NodeType::OR: return "+";
+            default: 
+                throw runtime_error{"Invalid binary expression"};
+                return "";
         }
     }
     std::unique_ptr<Node> left;
