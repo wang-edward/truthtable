@@ -2,9 +2,6 @@
 #include <unordered_map>
 #include <string>
 #include <iostream>
-#include <memory>
-#include <stdexcept>
-
 enum class NodeType {
     VARIABLE,
     NOT,
