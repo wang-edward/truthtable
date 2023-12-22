@@ -4,7 +4,13 @@ using namespace std;
 
 ComboNode:: ComboNode(string name, vector<unique_ptr<Node>> operands, 
                       unordered_map<vector<bool>, bool> truthtable)
-    : name{name}, operands{operands}, truthtable{truthtable} {
+    : name{name}, truthtable{truthtable} {
+
+    auto it = this->operands.begin();
+    for (auto &o : operands) {
+        *it = std::move(o);
+        it++;
+    }
 
     if (operands.size() != inputSize) {
         throw runtime_error{"Invalid number of operands for ComboNode. Provided: " + 

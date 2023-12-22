@@ -19,42 +19,77 @@ vector<string> App:: lexer(const string& input) {
     return tokens;
 }
 
-unique_ptr<Node> App:: parsePrimary(const vector<string>& tokens, size_t& index) {
+// std::unique_ptr<Node> App:: parsePrimary(const std::vector<std::string>& tokens, size_t& index) {
+//     if (tokens[index] == "(") {
+//         // Parenthesized expression
+//         index++;
+//         auto expression = parseExpression(tokens, index);
+//         index++;  // Consume closing parenthesis
+//         return expression;
+//     } else if (tokens[index] == "!") {
+//         // NOT operation
+//         index++;
+//         auto operand = parsePrimary(tokens, index);
+//         return std::make_unique<NotNode>(std::move(operand));
+//     } else {
+//         // Variable
+//         return std::make_unique<VariableNode>(tokens[index++]);
+//     }
+// }
+
+// std::unique_ptr<Node> App:: parseExpression(const std::vector<std::string>& tokens, size_t& index) {
+//     auto left = parsePrimary(tokens, index);
+//     while (index < tokens.size() && (tokens[index] == "+" || tokens[index] == "*")) {
+//         // Binary AND or OR operation
+//         NodeType type = (tokens[index++] == "+") ? NodeType::AND : NodeType::OR;
+//         auto right = parsePrimary(tokens, index);
+//         left = std::make_unique<BinaryOpNode>(type, std::move(left), std::move(right));
+//     }
+//     return left;
+// }
+//
+
+std::unique_ptr<Node> App:: parsePrimary(const std::vector<std::string>& tokens, size_t& index) {
     if (tokens[index] == "(") {
-        // Parenthesized expression
         index++;
         auto expression = parseExpression(tokens, index);
-        index++;  // Consume closing parenthesis
+        index++;
         return expression;
     } else if (tokens[index] == "!") {
-        // NOT operation
         index++;
         auto operand = parsePrimary(tokens, index);
         return make_unique<NotNode>(std::move(operand));
+    } else if (tokens[index] == "*" || tokens[index] == "+"){
+        NodeType type = (tokens[index] == "*") ? NodeType::AND : NodeType::OR;
+        index++;
+        auto left = parsePrimary(tokens, index);
+        index++;
+        auto right = parsePrimary(tokens, index);
+        return make_unique<BinaryOpNode>(type, std::move(left), std::move(right));
     } else {
-        // Variable
-        return make_unique<VariableNode>(tokens[index++]);
+        return make_unique<VariableNode>(tokens[index]);
+        index++;
     }
 }
 
-unique_ptr<Node> App:: parseExpression(const vector<string>& tokens, size_t& index) {
-    auto left = parsePrimary(tokens, index);
-    while (index < tokens.size() && (tokens[index] == "+" || tokens[index] == "*")) {
-        // Binary AND or OR operation
-        NodeType type;
-        if (tokens[index] == "+") {
-        type = NodeType::OR;
-        } else if (tokens[index] == "*") {
-            type = NodeType::AND;
-        } else {
-            throw runtime_error{"Parsing error: invalid expression"};
-        }
-        index++;
+
+std::unique_ptr<Node> App:: parseExpression(const std::vector<std::string>& tokens, size_t& index) {
+    auto primary = parsePrimary(tokens, index);
+    while (index < tokens.size()) {
+        auto op = tokens[index++];
         auto right = parsePrimary(tokens, index);
-        left = make_unique<BinaryOpNode>(type, std::move(left), std::move(right));
+        if (!right) {
+            std::cerr << "Error: Expected operand after operator." << std::endl;
+            break;
+        }
+
+        primary = std::make_unique<BinaryOpNode>(
+            (op == "*") ? NodeType::AND : NodeType::OR, std::move(primary), std::move(right));
     }
-    return left;
+
+    return primary;
 }
+
 
 void App:: readFileExp() {
     string ans;
