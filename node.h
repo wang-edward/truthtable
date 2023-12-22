@@ -3,11 +3,14 @@
 #include <string>
 #include <iostream>
 #include <memory>
+#include <vector>
+#include "util.h"
 enum class NodeType {
     VARIABLE,
     NOT,
     AND,
-    OR
+    OR,
+    COMBO
 };
 
 class Node {
