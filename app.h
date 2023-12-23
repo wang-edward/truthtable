@@ -18,6 +18,7 @@ class App {
     std::string expression;
     std::vector<std::string> tokens;
     std::unique_ptr<Node> parseTree;
+    std::vector<std::string> variableList; // used for maintaining variable order
     std::unordered_map<std::string, bool> variableMap;
     std::string filenameExp;
     std::string filenameMap;

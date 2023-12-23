@@ -85,6 +85,7 @@ void App:: readFileMap() {
             } else {
                 throw runtime_error{"Invalid value for variable " + variable + ": " + valueStr};
             }
+            variableList.push_back(variable);
         } else {
             throw runtime_error{"Invalid line format: " + line};
         }
@@ -103,8 +104,8 @@ void App:: begin() {
         bool result = parseTree->evaluate(variableMap);
         cout << boolalpha;
         cout << "Variables:\n";
-        for (auto v : variableMap) {
-            cout << "\t" << v.first << ": " << v.second << "\n";
+        for (auto v : variableList) {
+            cout << "\t" << v << ": " << variableMap[v] << "\n";
         }
         cout << "Expression: ";
         parseTree->print(); //  Print parsetree recursively (for fun)
