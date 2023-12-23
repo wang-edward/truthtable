@@ -14,8 +14,7 @@ bool VariableNode:: evaluate(const unordered_map<string, bool>& variableValues) 
     if (it != variableValues.end()) {
         return it->second;
     } else {
-        // For simplicity, assuming undefined variables are false
-        return false;
+        throw runtime_error{"Invalid expression. Variable not found: " + name};
     }
 }
 

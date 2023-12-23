@@ -23,7 +23,9 @@ bool BinaryOpNode:: evaluate(const unordered_map<string, bool>& variableValues) 
     } else if (type == NodeType::OR) {
         return leftValue || rightValue;
     } else {
-        // For simplicity, returning false for undefined operation
-        return false;
+        throw runtime_error{"Invalid expression, taking operation of (" + 
+                            this->printNodeType() + " " +
+                            left->printNodeType() + " " +
+                            right->printNodeType()};
     }
 }

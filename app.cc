@@ -43,7 +43,7 @@ unique_ptr<Node> App:: parseExpression(const vector<string>& tokens, size_t& ind
         // Binary AND or OR operation
         NodeType type;
         if (tokens[index] == "+") {
-        type = NodeType::OR;
+            type = NodeType::OR;
         } else if (tokens[index] == "*") {
             type = NodeType::AND;
         } else {

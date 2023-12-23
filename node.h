@@ -19,4 +19,23 @@ public:
     virtual void print() const = 0;
     virtual bool evaluate(const std::unordered_map<std::string, bool>& variableValues) const = 0;
     virtual ~Node() {}
+    std::string printNodeType() const {
+        switch(this->getType()) {
+            case NodeType::VARIABLE:
+                return "VARIABLE";
+                break;
+            case NodeType::NOT:
+                return "NOT";
+                break;
+            case NodeType::AND:
+                return "AND";
+                break;
+            case NodeType::OR:
+                return "OR";
+                break;
+            case NodeType::COMBO:
+                return "COMBO";
+                break;
+        }
+    }
 };

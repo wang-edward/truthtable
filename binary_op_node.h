@@ -5,8 +5,8 @@ class BinaryOpNode : public Node {
     NodeType type;
     std::string getOpSymbol() const {
         switch (type) {
-            case NodeType::AND: return "+";
-            case NodeType::OR: return "*";
+            case NodeType::AND: return "*";
+            case NodeType::OR: return "+";
             default: return "";
         }
     }
